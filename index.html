@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daisy | Structural Vision</title>
+    <!-- Tailwind CSS for modern editorial layouts and typography -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js for rendering hardware-accelerated 3D elements -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght=0,300;0,400;0,600;0,800;1,400&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #060407;
+            overflow-x: hidden;
+        }
+
+        /* 3D Figma Canvas Core Underlay Layout */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Ambient subtle grid mirroring a production Figma UI view workspace */
+        .figma-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Luxury editorial glass structures to cleanly isolate content depth */
+        .glass-card {
+            background: rgba(14, 10, 18, 0.65);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .text-gradient-crimson {
+            background: linear-gradient(135deg, #ffffff 40%, #ef4444 80%, #b91c1c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom tracking scroll bar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060407;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ef4444;
+            border-radius: 2px;
+        }
+
+        /* Kinetic Entry Scroll Reveal Physics */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Typewriter indicator ticker */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background-color: #ef4444;
+            vertical-align: middle;
+            animation: blink 1.1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="text-slate-300 antialiased selection:bg-red-600 selection:text-white">
+
+    <!-- Figma Technical Workspace Backdrop Grid Grid lines -->
+    <div class="figma-grid"></div>
+
+    <!-- Real-time 3D Interactive Floating Red Petal Canvas Node -->
+    <div id="canvas-container"></div>
+
+    <!-- UI Overlay Presentation Layout -->
+    <div class="content-layer min-h-screen flex flex-col justify-between">
+        
+        <!-- Premium Minimalist Top Bar Navigation Components -->
+        <header class="w-full max-w-7xl mx-auto px-6 py-8 flex justify-between items-center reveal active">
+            <div class="text-xs font-bold tracking-[0.4em] text-red-500 uppercase">Prototype // Horizon</div>
+            <div class="h-[1px] flex-grow mx-8 bg-gradient-to-r from-red-500/20 to-transparent hidden md:block"></div>
+            <div class="text-xs tracking-widest text-slate-400 font-light">DEDICATED TO DAISY</div>
+        </header>
+
+        <!-- Main Dashboard Workspace Frame -->
+        <main class="w-full max-w-6xl mx-auto px-4 sm:px-6 my-auto py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- LEFT PANEL: Dynamic Text Copy and Editorial Statements -->
+                <div class="lg:col-span-7 glass-card p-8 sm:p-16 rounded-3xl shadow-2xl relative overflow-hidden order-2 lg:order-1">
+                    <div class="absolute -top-32 -right-32 w-64 h-64 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <!-- Code Ticker Tagline -->
+                    <div class="mb-8 reveal active">
+                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-400 border border-red-500/20 uppercase tracking-widest">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span> 
+                            <span id="typewriter-text"></span><span class="cursor"></span>
+                        </span>
+                    </div>
+
+                    <!-- Identity Heading Typography -->
+                    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-8 leading-[1.15] reveal active">
+                        Daisy: <br>
+                        <span class="text-gradient-crimson">The Milestone is Only the Baseline.</span>
+                    </h1>
+
+                    <!-- High-End Speech Script Layout -->
+                    <div class="space-y-6 text-base sm:text-lg text-slate-300 font-light leading-relaxed">
+                        <p class="reveal">
+                            True execution requires celebrating your highest milestones while understanding they are simply data markers on a much grander timeline. The tassel moves, the certification locks, and the frame is set—but your blueprint demands persistent, unchecked progression.
+                        </p>
+                        <blockquote class="border-l-2 border-red-500 pl-5 my-8 italic text-slate-400 font-normal reveal">
+                            "Do not minimize your expansion to suit the safety limits of typical operational spaces. Exceptional architecture commands absolute execution."
+                        </blockquote>
+                        <p class="reveal">
+                            Every single variable on your trajectory is a component to master, calibrate, and dominate. You possess the strategic focus to move past normal constraints, transforming ambient pressure into clean, creative velocity.
+                        </p>
+                    </div>
+
+                    <!-- Figma Style Interactive Call to Action Panel -->
+                    <div class="mt-12 pt-8 border-t border-slate-800/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 reveal">
+                        <div class="text-sm text-slate-400 font-light tracking-wide">
+                            Absolute scale. Perpetual refinement.
+                        </div>
+                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-medium text-sm transition-all duration-300 shadow-xl shadow-red-950/30 hover:scale-[1.02] active:scale-[0.98] cursor-pointer tracking-wider uppercase font-semibold">
+                            Re-center Frame
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL: 3D Layered Image Matrix Frame -->
+                <div class="lg:col-span-5 flex justify-center order-1 lg:order-2 w-full">
+                    <div class="relative group max-w-sm lg:max-w-full w-full px-4">
+                        <!-- Background offset vector card tracking depth -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-red-600/20 to-transparent rounded-3xl blur-xl transform group-hover:scale-105 transition-transform duration-700"></div>
+                        
+                        <!-- Main 3D Framed Layer Container referencing image asset directly -->
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-slate-900 transform transition-all duration-500 group-hover:scale-[1.01] group-hover:-translate-y-1">
+                            <img 
+                                src="Screenshot 2026-02-14 175319.png" 
+                                alt="Daisy Graduation Portrait" 
+                                class="w-full h-auto object-cover opacity-90 transition-opacity duration-500 group-hover:opacity-100"
+                            />
+                            <!-- Figma Ambient Highlight Gradient Mask Sheet -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#060407] via-transparent to-transparent opacity-60"></div>
+                            
+                            <!-- Technical Vector Corner Tag Label -->
+                            <div class="absolute bottom-4 left-4 right-4 glass-card px-4 py-3 rounded-xl border border-white/5 flex justify-between items-center">
+                                <span class="text-xs font-semibold tracking-wider text-white">ASSET_NODE_01 // DAISY</span>
+                                <span class="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded border border-red-500/30 font-mono">CLASS OF 2021</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Deep Analytical Metadata Tech Footer -->
+        <footer class="w-full max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-slate-900/60 text-xs text-slate-500 tracking-wider reveal">
+            <div>
+                <p class="font-bold text-slate-400 uppercase mb-1">Instance</p>
+                <p>Daisy // Unrestrained Velocity</p>
+            </div>
+            <div>
+                <p class="font-bold text-slate-400 uppercase mb-1">Architecture</p>
+                <p>Three.js Rendered 3D Red Petals</p>
+            </div>
+            <div>
+                <p class="font-bold text-slate-400 uppercase mb-1">Matrix Map</p>
+                <p>Figma Micro-Grid Node Platform</p>
+            </div>
+            <div class="text-right">
+                <p class="font-bold text-slate-400 uppercase mb-1">Telemetry</p>
+                <p class="text-red-400 font-semibold animate-pulse">Optimal State • 100%</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT: 3D ENGINE & COGNITIVE CONTROLS -->
+    <!-- ========================================== -->
+    <script>
+        // --- 1. JAVASCRIPT UI: TYPEWRITER INTERACTION ENGINE ---
+        const typewriterText = "Calibrate Infinite Progression";
+        const typewriterElement = document.getElementById('typewriter-text');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < typewriterText.length) {
+                typewriterElement.textContent += typewriterText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 90); 
+            }
+        }
+        setTimeout(typeWriter, 800);
+
+
+        // --- 2. JAVASCRIPT UI: INTERSECTION OBSERVER SCROLL REVEALS ---
+        const reveals = document.querySelectorAll('.reveal');
+        const observerOptions = {
+            threshold: 0.05, 
+            rootMargin: "0px 0px -40px 0px"
+        };
+
+        const scrollObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        reveals.forEach(reveal => {
+            scrollObserver.observe(reveal);
+        });
+
+
+        // --- 3. JAVASCRIPT 3D ENGINE: THREE.JS HIGH PERFORMANCE FALLING RED PETAL FIELD ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // CREATE A CURVED 3D GEOMETRY SURFACE (MODELING A NATURAL DRIFTING ROSE PETAL)
+        const petalGeometry = new THREE.ConeGeometry(0.3, 0.5, 3, 2); 
+        
+        // Custom Premium Crimson Material with Soft Light Diffusion Properties
+        const petalMaterial = new THREE.MeshPhongMaterial({
+            color: 0xdc2626,          // Base Crimson Hue
+            shininess: 30,
+            specular: 0xfca5a5,       // Soft Rose Highlights
+            side: THREE.DoubleSide,
+            flatShading: true         // Structural geometric look mimicking stylized Figma layers
+        });
+
+        const petals = [];
+        const petalCount = window.innerWidth < 768 ? 20 : 55; // Performance-minded element distribution scaling
+
+        for (let i = 0; i < petalCount; i++) {
+            const mesh = new THREE.Mesh(petalGeometry, petalMaterial);
+            
+            // Randomly scatter petals broadly overhead across full width matrix
+            mesh.position.set(
+                (Math.random() - 0.5) * 16, // Left-to-right spread coordinates
+                (Math.random() * 14) - 2,   // Upper height starting vectors
+                (Math.random() - 0.5) * 6   // Depth layers map
+            );
+
+            // Randomize starting tilt angles
+            mesh.rotation.set(
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+                Math.random() * Math.PI
+            );
+
+            // Subtle scaling variations to mirror realistic focal distribution fields
+            const randomScale = 0.4 + Math.random() * 0.7;
+            mesh.scale.set(randomScale, randomScale, randomScale * 0.4); // Flattened thickness modeling a petal profile
+
+            // Assign individualized kinematic falling variables
+            petals.push({
+                mesh: mesh,
+                fallSpeed: 0.015 + Math.random() * 0.02,
+                swaySpeed: 1 + Math.random() * 2,
+                swayOffset: Math.random() * Math.PI * 2,
+                rotSpeedX: (Math.random() - 0.5) * 0.02,
+                rotSpeedY: (Math.random() - 0.5) * 0.03,
+                rotSpeedZ: (Math.random() - 0.5) * 0.01
+            });
+
+            scene.add(mesh);
+        }
+
+        // Lighting System Array to bring out the depth of the red shades
+        const ambientLight = new THREE.AmbientLight(0x1a0b10, 5.0);
+        scene.add(ambientLight);
+
+        const primarySpotLight = new THREE.DirectionalLight(0xff6b6b, 5.0); // Rich Warm Crimson Source Light
+        primarySpotLight.position.set(5, 10, 3);
+        scene.add(primarySpotLight);
+
+        const coldFillLight = new THREE.DirectionalLight(0x7f1d1d, 3.0); // Deep Maroon Counter Light
+        coldFillLight.position.set(-5, -5, 2);
+        scene.add(coldFillLight);
+
+        camera.position.z = 6;
+
+        // Interactive Scroll Tracking Interpolation Hook
+        let scrollY = 0;
+        let scrollSpeedFactor = 0;
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            // Increases fall speed velocity dynamically based on active scrolling heights
+            scrollSpeedFactor = scrollY * 0.00005;
+        });
+
+        // Window Dimension Adaptation Handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Infinite Kinematic Rendering Animation Loop
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            petals.forEach(petal => {
+                // Continuous downward vertical displacement matching fluid speed tracking
+                petal.mesh.position.y -= (petal.fallSpeed + scrollSpeedFactor);
+                
+                // Sinusoidal pendulum side sway simulating atmospheric drag resistance
+                petal.mesh.position.x += Math.sin(elapsedTime * petal.swaySpeed + petal.swayOffset) * 0.004;
+                
+                // Continuous tumbling micro-rotation loop sequence across three planes
+                petal.mesh.rotation.x += petal.rotSpeedX;
+                petal.mesh.rotation.y += petal.rotSpeedY + (scrollSpeedFactor * 0.1);
+                petal.mesh.rotation.z += petal.rotSpeedZ;
+
+                // Recycle mechanism: smoothly return petal to top if it clears the bottom viewport base
+                if (petal.mesh.position.y < -6) {
+                    petal.mesh.position.y = 7;
+                    petal.mesh.position.x = (Math.random() - 0.5) * 16;
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
